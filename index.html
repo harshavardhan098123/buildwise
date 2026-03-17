@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BuildWise AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0a1628, #0d2137, #0f2744);
+    color: #e2e8f0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+}
+
+h1 {
+    font-size: 3rem;
+    background: linear-gradient(90deg,#38bdf8,#34d399,#facc15);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1);
+}
+
+.tab.active {
+    background: #0891b2;
+}
+
+.section {
+    display: none;
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.section.active {
+    display: block;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#0891b2,#0d9488);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.4);
+    white-space: pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>🏗️ BuildWise AI</h1>
+    <p>AI Construction Planning Platform</p>
+</div>
+
+<div class="tabs">
+    <div class="tab active" onclick="openTab(0)">Cost</div>
+    <div class="tab" onclick="openTab(1)">Schedule</div>
+    <div class="tab" onclick="openTab(2)">Chat</div>
+</div>
+
+<!-- COST -->
+<div class="section active">
+    <h2>Cost Estimation</h2>
+    <input id="location" placeholder="Location">
+    <input id="area" type="number" placeholder="Area (sq ft)">
+    <button onclick="generateCost()">Generate</button>
+    <div id="costResult" class="result"></div>
+</div>
+
+<!-- SCHEDULE -->
+<div class="section">
+    <h2>Schedule</h2>
+    <input id="start" type="date">
+    <input id="months" type="number" placeholder="Months">
+    <button onclick="generateSchedule()">Generate</button>
+    <div id="scheduleResult" class="result"></div>
+</div>
+
+<!-- CHAT -->
+<div class="section">
+    <h2>Chat</h2>
+    <textarea id="chatInput" placeholder="Ask something..."></textarea>
+    <button onclick="sendChat()">Send</button>
+    <div id="chatResult" class="result"></div>
+</div>
+
+</div>
+
+<script>
+function openTab(index) {
+    document.querySelectorAll(".tab").forEach((t,i)=>{
+        t.classList.toggle("active", i===index);
+    });
+    document.querySelectorAll(".section").forEach((s,i)=>{
+        s.classList.toggle("active", i===index);
+    });
+}
+
+// ⚠️ Replace this with backend API call
+async function fakeAI(prompt) {
+    return "AI Response:\\n\\n" + prompt;
+}
+
+async function generateCost() {
+    let location = document.getElementById("location").value;
+    let area = document.getElementById("area").value;
+
+    let prompt = `Cost estimate for ${area} sq ft in ${location}`;
+
+    let res = await fakeAI(prompt);
+    document.getElementById("costResult").innerText = res;
+}
+
+async function generateSchedule() {
+    let start = document.getElementById("start").value;
+    let months = document.getElementById("months").value;
+
+    let prompt = `Schedule from ${start} for ${months} months`;
+
+    let res = await fakeAI(prompt);
+    document.getElementById("scheduleResult").innerText = res;
+}
+
+async function sendChat() {
+    let input = document.getElementById("chatInput").value;
+
+    let res = await fakeAI(input);
+    document.getElementById("chatResult").innerText = res;
+}
+</script>
+
+</body>
+</html>
